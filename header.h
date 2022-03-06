@@ -1,5 +1,5 @@
-#ifndef HEADER
-#define HEADER
+#ifndef HEADER_END
+#define HEADER_END
 
 //for structure type declarations, function prototypes, and global variable extern delcarations
 typedef struct
@@ -19,10 +19,12 @@ typedef struct
 	int nrg;
 } player;
 
-int hp(char t);
-int dmg(char t);
+int life(char t);
+int att(char t);
 int nrg(char t);
-void explore();
+void wprompt(int l);
+void dprompt(int l);
+void bprompt(int l);
 
 
 #endif
