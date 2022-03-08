@@ -2,13 +2,6 @@
 #define HEADER_END
 
 //for structure type declarations, function prototypes, and global variable extern delcarations
-typedef struct
-{
-	char type;
-	int hp;
-	int dmg;
-	int nrg;
-} enemy;
 
 typedef struct
 {
@@ -25,6 +18,6 @@ int nrg(char t);
 void wprompt(int l);
 void dprompt(int l);
 void bprompt(int l);
-
+int enemyStats (player *vile, int d, int xp);
 
 #endif
