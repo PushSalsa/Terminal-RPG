@@ -9,13 +9,11 @@ Write your code in this editor and press "Run" button to compile and execute it.
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
-#include "header.h"
-
-
+#include "functions.h"
 
 int main()
 {
-	int r=0,d=0,xp=0,pxp=0,lvl=1,dmg=0,ene=0,maxHP=0,maxNRG=0;
+	int r=0,randomNum=0,xp=0,pxp=0,lvl=1,dmg=0,ene=0,maxHP=0,maxNRG=0;
 	char move,act;
 	player play;
 	srand (time(NULL));	//use with int r = rand() % 20 to get rand num between 0 - 19
@@ -25,10 +23,8 @@ int main()
 	while (play.type != 'w' && play.type != 'd' && play.type != 'b') 
 	{
 	    scanf(" %c", &play.type);
-		if (play.type != 'w' && play.type != 'd' && play.type != 'b')
-			printf("Invalid entry! type w, d, or b:\n");
+		play.hp = life(play.type);
 	}
-	play.hp = life(play.type);
 	play.dmg = att(play.type);
 	play.nrg = nrg(play.type);
     maxHP = play.hp;
@@ -58,43 +54,9 @@ int main()
 		if (r >= 2)
 		{
 			printf("\nYou've encountered an enemy. "); //list: malwarewolf, phisherman, minorbug, deedos
-			d = rand() % 4;
-			enemy vile;
-			switch (d)
-			{
-			case 0:
-				vile.hp = 20;
-				vile.dmg = 5;
-				vile.nrg = 25;
-				vile.type = 'b';
-				xp = 5;
-				printf("It's the minorbug!");
-				break;
-			case 1:
-				vile.hp = 30;
-				vile.dmg = 10;
-				vile.nrg = 40;
-				vile.type = 'p';
-				xp = 15;
-				printf("It's the phisherman!");
-				break;
-			case 2:
-				vile.hp = 75;
-				vile.dmg = 10;
-				vile.nrg = 50;
-				vile.type = 'm';
-				xp = 25;
-				printf("It's the malwarewolf!");
-				break;
-			case 3:
-				vile.hp = 60;
-				vile.dmg = 5;
-				vile.nrg = 75;
-				vile.type = 'd';
-				xp = 20;
-				printf("It's the deedos!");
-				break;
-			}
+			randomNum = rand() % 4;
+			player vile;
+			xp = enemyStats(&vile,randomNum,xp);
 			printf("\nHP:%d \tAttack:%d\tEnergy:%d\n\nYour current stats are:", vile.hp, vile.dmg, vile.nrg);
 			printf("\nHP:%d \tAttack:%d\tEnergy:%d\n\nWhat will you do?", play.hp, play.dmg, play.nrg);
 			while(play.hp>0 && vile.hp>0)
@@ -117,7 +79,7 @@ int main()
                     }
     		    }
     		    printf("\nYou used ");
-    		    d = (rand()%16) + 5;
+    		    randomNum = (rand()%16) + 5;
     		    switch(act)
         		{
         		case 'q':
@@ -131,12 +93,12 @@ int main()
         			goto runaway;
         			break;
         		case 'e':
-        		    play.nrg+=d;
-        			printf("Energy Recovery, recovering %d energy.",d);
+        		    play.nrg+=randomNum;
+        			printf("Energy Recovery, recovering %d energy.",randomNum);
         			break;
         		case 'r':
-        		    play.hp+=d;
-        			printf("Health Recovery, recovering %d health.",d);
+        		    play.hp+=randomNum;
+        			printf("Health Recovery, recovering %d health.",randomNum);
         			break;
         		}
     			if (play.type == 'w')
@@ -267,8 +229,8 @@ int main()
     			if (vile.hp<=0)
     			    goto win;
     			printf("\n\nYour opponent uses ");
-    			d = rand()%3;
-    		    switch(d)
+    			randomNum = rand()%3;
+    		    switch(randomNum)
         		{
         		case 0:
         		    vile.nrg-=2;
@@ -296,7 +258,8 @@ int main()
 			win: printf("\nThe enemy is deleted!\n");
 			pxp+=xp;
 			printf("You gained %d xp.",xp);
-			runaway:act='z';
+			runaway:;
+			act='z';
 			if (pxp>=100)
 			{
 			    ++lvl;
@@ -326,132 +289,3 @@ int main()
 	dead:;
 	printf("\n\nGame Over, you're dead!\nDead at level %d",lvl);
 }
-
-
-
-int life(char t)
-{
-	int x;
-	switch (t)
-	{
-	case 'w':
-		x = 50;
-		break;
-	case 'd':
-		x = 150;
-		break;
-	case 'b':
-		x = 100;
-		break;
-	}
-	return x;
-}
-
-int att(char t)
-{
-	int x;
-	switch (t)
-	{
-	case 'w':
-		x = 10;
-		break;
-	case 'd':
-		x = 5;
-		break;
-	case 'b':
-		x = 15;
-		break;
-	}
-	return x;
-}
-
-int nrg(char t)
-{
-	int x;
-	switch (t)
-	{
-	case 'w':
-		x = 150;
-		printf("\nYou have chosen the Code Wizard!\n");
-		break;
-	case 'd':
-		x = 100;
-		printf("\nYou have chosen the Windows Defender!\n");
-		break;
-	case 'b':
-		x = 50;
-		printf("\nYou have chosen the Brute Force\n");
-		break;
-	}
-	return x;
-}
-
-void wprompt(int l)
-{
-    printf("\n(5) Wand Blast = a");
-    switch(l)
-    {
-    case 5:
-        printf("\n(10) Fireball = s");
-        break;
-    case 10:
-        printf("\n(20) Gusty Forces = d");
-    	break;
-    case 15:
-       	printf("\n(30) Shadow Bomb = f");
-      	break;
-    case 20:
-        printf("\n(45) Data Drainer = c");
-        break;
-    case 25:
-        printf("\n(60) Cyber Electrocution = v");
-        break;
-    }
-}
-
-void dprompt(int l)
-{
-    printf("\n(5) Shield Bash = a");
-    switch(l)
-    {
-    case 5:
-        printf("\n(10) Rejuvenate = s");
-        break;
-    case 10:
-        printf("\n(15) Thorns = d");
-        break;
-    case 15:
-        printf("\n(20) Window's Grasp = f");
-        break;
-    case 20:
-        printf("\n(30) Overload = c");
-        break;
-    case 25:
-        printf("\n(40) Data Destruction = v");
-        break;
-    }
-}
-
-void bprompt(int l)
-{
-    printf("\n(5) Brute Swipe = a");
-    switch(l)
-    {
-    case 5:
-        printf("\n(10) Brutal Combo = s");
-        break;
-    case 10:
-        printf("\n(15) Double Dual Blades  = d");
-        break;
-    case 15:
-        printf("\n(20) Sharknado = f");
-        break;
-    case 20:
-        printf("\n(25) Vampiric Flurry = c");
-        break;
-    case 25:
-        printf("\n(30) Chaos DDOS = v");
-        break;
-    }
-}
-
