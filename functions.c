@@ -1,35 +1,3 @@
-
-Conversation opened. 1 unread message.
-
-Skip to content
-Using Gmail with screen readers
-Meet
-Hangouts
-8 of 11,116
-update6 (UNCLASSIFIED)
-Inbox
-Salazar Mejia, Kevin A SPC USARMY 780 MI BDE (USA) <kevin.a.salazarmejia.mil@army.mil>
-	
-AttachmentsThu, Mar 10, 1:59 PM (2 days ago)
-	
-to me
-
-CLASSIFICATION: UNCLASSIFIED
-
- 
-
- 
-
- 
-
- 
-
-CLASSIFICATION: UNCLASSIFIED
-3 Attachments
-	
-	
-	
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -332,8 +300,3 @@ void battle (player *vile, player *play, int randomNum,char act)
 	    return;
     printf("\n\nYour HP: %d\tYour Energy: %d\nEnemy HP: %d\tEnemy Energy: %d", play->hp,play->nrg,vile->hp,vile->nrg);
 }
-
-//void foundData
-
-functions.c.txt
-Displaying source.c.txt.
