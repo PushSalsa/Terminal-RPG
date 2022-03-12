@@ -1,35 +1,3 @@
-
-Conversation opened. 1 unread message.
-
-Skip to content
-Using Gmail with screen readers
-Meet
-Hangouts
-8 of 11,116
-update6 (UNCLASSIFIED)
-Inbox
-Salazar Mejia, Kevin A SPC USARMY 780 MI BDE (USA) <kevin.a.salazarmejia.mil@army.mil>
-	
-AttachmentsThu, Mar 10, 1:59 PM (2 days ago)
-	
-to me
-
-CLASSIFICATION: UNCLASSIFIED
-
- 
-
- 
-
- 
-
- 
-
-CLASSIFICATION: UNCLASSIFIED
-3 Attachments
-	
-	
-	
-
 /******************************************************************************
 
                             Online C Compiler.
@@ -134,6 +102,3 @@ int main()
 	}
 	printf("\n\nGame Over, you're dead!\nDead at level %d",lvl);
 }
-
-source.c.txt
-Displaying source.c.txt.
