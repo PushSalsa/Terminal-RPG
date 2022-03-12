@@ -1,14 +1,34 @@
 
+Conversation opened. 1 unread message.
 
 Skip to content
 Using Gmail with screen readers
 Meet
 Hangouts
-Conversations
-14.17 GB of 15 GB (94%) used
-Terms · Privacy · Program Policies
-Last account activity: 2 hours ago
-Details
+8 of 11,116
+update6 (UNCLASSIFIED)
+Inbox
+Salazar Mejia, Kevin A SPC USARMY 780 MI BDE (USA) <kevin.a.salazarmejia.mil@army.mil>
+	
+AttachmentsThu, Mar 10, 1:59 PM (2 days ago)
+	
+to me
+
+CLASSIFICATION: UNCLASSIFIED
+
+ 
+
+ 
+
+ 
+
+ 
+
+CLASSIFICATION: UNCLASSIFIED
+3 Attachments
+	
+	
+	
 
 /******************************************************************************
 
@@ -25,7 +45,7 @@ Write your code in this editor and press "Run" button to compile and execute it.
 
 int main()
 {
-	int r=0,randomNum=0,xp=0,pxp=0,lvl=1,maxHP=0,maxNRG=0;
+	int r=0,randomNum=0,xp=0,pxp=0,lvl=25,maxHP=0,maxNRG=0;
 	char move,act;
 	player play;
 	srand (time(NULL));	//use with int r = rand() % 20 to get rand num between 0 - 19
@@ -55,7 +75,7 @@ int main()
         	printf("\nHP:%d \tAttack:%d\tEnergy:%d\n\nWhat will you do?", play.hp, play.dmg, play.nrg);  
 			while(play.hp>0 && vile.hp>0)
 			{
-    			prompt(lvl,play.type);
+    			prompt(lvl,&play);
     			while(act != 'q' && act != 'w' && act != 'e' && act != 'r' && act != 'a' && act != 's' && act != 'd' && act != 'f' && act != 'c' && act != 'v')
     			{
         			printf("\nEnter one of choices from the list above!:\n");
@@ -116,4 +136,4 @@ int main()
 }
 
 source.c.txt
-Displaying functions.c.txt.
+Displaying source.c.txt.
