@@ -1,11 +1,3 @@
-/******************************************************************************
-
-                            Online C Compiler.
-                Code, Compile, Run and Debug C program online.
-Write your code in this editor and press "Run" button to compile and execute it.
-
-*******************************************************************************/
-
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
@@ -13,7 +5,7 @@ Write your code in this editor and press "Run" button to compile and execute it.
 
 int main()
 {
-	int r=0,randomNum=0,xp=0,pxp=0,lvl=25,maxHP=0,maxNRG=0;
+	int r=0,randomNum=0,xp=0,pxp=0,lvl=0,maxHP=0,maxNRG=0;
 	char move,act;
 	player play;
 	srand (time(NULL));	//use with int r = rand() % 20 to get rand num between 0 - 19
@@ -53,6 +45,11 @@ int main()
                         act='z';
                         printf("\nYou are not a high enough level to use this yet.");
                     }
+                    if ((act=='q' && play.nrg<2) || (act=='w' && play.nrg<10) || (act=='a' && play.nrg<play.nrgActions[0]) || (act=='s' && play.nrg<play.nrgActions[1]) || (act=='d' && play.nrg<play.nrgActions[2]) ||(act=='f' && play.nrg<play.nrgActions[3]) || (act=='c' && play.nrg<play.nrgActions[4]) || (act=='v' && play.nrg<play.nrgActions[5]))
+                    {    
+                        act='z';
+                        printf("\nYou do not have enough energy to do this.");
+                    }
     		    }
     		    randomNum = (rand()%16) + 5;
     		    battle(&vile,&play,randomNum,act);
@@ -64,18 +61,20 @@ int main()
         	{
         	    printf("\nThe enemy is deleted!\n");
         	    pxp+=xp;
-        	    printf("You gained %d xp.",xp);
+        	    printf("\nYou gained %d xp.",xp);
                 if (pxp>=100)
     			{
     			    ++lvl;
     			    pxp-=100;
-    			    printf("You leveled up!");
+    			    printf("You leveled up!\nYou are now Level %d",lvl);
     			}
         	}
 			if (play.hp > maxHP)
 	            play.hp = maxHP;
 		    if (play.nrg > maxNRG)
 		        play.nrg = maxNRG;
+		    if (play.nrg < 0)
+		        play.nrg = 0;
 			act='z';
 		}
 		if (r == 0)
