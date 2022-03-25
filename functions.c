@@ -1,41 +1,66 @@
+
+None selected 
+
+Skip to content
+Using Gmail with screen readers
+Meet
+Hangouts
+Conversations
+14.2 GB of 15 GB (94%) used
+Terms · Privacy · Program Policies
+Last account activity: 7 hours ago
+Details
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "functions.h"
 
 
-void playerStats(player *play)
+void playerStats(player *play)              //nrg = Energy; dmg = Damage
 {
+    static const int wizDmgMultiplier[]= {2,3.5,4.25,6,7.5,9};
+    static const int defDmgMultiplier[]= {2,3.5,4.25,6,7.5,9};
+    static const int barDmgMultiplier[]= {2,3.5,4.25,6,7.5,9};
     static const int wizNRG[]= {5,10,20,30,45,60};
     static const int defNRG[]= {5,10,15,20,30,40};
     static const int barNRG[]= {5,10,15,20,25,30};
+    static const int wizNrgDrain[]= {0,0,10,15,20,25};
+    static const int defNrgDrain[]= {0,0,10,15,20,25};
+    static const int barNrgDrain[]= {0,0,10,15,20,25};
     static const char wizName[6][20]= {"Wand Blast","Fireball","Gusty Forces","Shadow Bomb","Data Drainer","Cyber Electrocution"};
-    static const char defName[6][20]= {"Wand Blast","Fireball","Gusty Forces","Shadow Bomb","Data Drainer","Cyber Electrocution"};
-    static const char barName[6][20]= {"Wand Blast","Fireball","Gusty Forces","Shadow Bomb","Data Drainer","Cyber Electrocution"};
+    static const char defName[6][20]= {"Shield Bash","Regrowth","Thorns","Hammertime","Golden Key","Data Obliteration"};
+    static const char barName[6][20]= {"Charged Attack","Greatsword","Dual Swords","","Sharknado","Electric Overload"};
     switch (play->type)
 	{
 	case 'w':
 		play->hp = 50;
 		play->dmg = 10;
 		play->nrg = 150;
-		memcpy(play->nrgActions, wizNRG, sizeof(play->nrgActions));
+		memcpy(play->dmgMultiplier, wizDmgMultiplier, sizeof(play->dmgMultiplier));
+		memcpy(play->nrgActions, wizNRG, sizeof(play->nrgActions));         //assigns values within arrays above into the struct's arrays
 		memcpy(play->nameActions, wizName, sizeof(play->nameActions));
+		memcpy(play->nrgDrain, wizNrgDrain, sizeof(play->nrgDrain));
 		printf("\nYou have chosen the Code Wizard!\n");
 		break;
 	case 'd':
 		play->hp = 150;
 		play->dmg = 5;
 		play->nrg = 100;
+		memcpy(play->dmgMultiplier, defDmgMultiplier, sizeof(play->dmgMultiplier));
         memcpy(play->nrgActions, defNRG, sizeof(play->nrgActions));
 		memcpy(play->nameActions, defName, sizeof(play->nameActions));
+		memcpy(play->nrgDrain, defNrgDrain, sizeof(play->nrgDrain));
 		printf("\nYou have chosen the Windows Defender!\n");
 		break;
 	case 'b':
 		play->hp = 100;
 		play->dmg = 15;
 		play->nrg = 50;
+		memcpy(play->dmgMultiplier, barDmgMultiplier, sizeof(play->dmgMultiplier));
 		memcpy(play->nrgActions, barNRG, sizeof(play->nrgActions));
 		memcpy(play->nameActions, barName, sizeof(play->nameActions));
+		memcpy(play->nrgDrain, barNrgDrain, sizeof(play->nrgDrain));
 		printf("\nYou have chosen the Brute Force\n");
 		break;
 	}
@@ -124,17 +149,12 @@ int enemyStats (player *vile, int d, int xp)
 
 void battle (player *vile, player *play, int randomNum,char act)
 {
-    int dmg=0,ene=0;
+    int dmg=0,ene=0,actNum=-1;
     printf("\nYou used ");
     switch(act)
 	{
-	case 'q':
-	    play->nrg-=2;
-         dmg = play->dmg;
-		printf("Basic Attack, dealing %d damage.", dmg);
-		break;
 	case 'w':
-	    play->nrg-=15;
+	    play->nrg-=10;
 		printf("this opportunity to run away!");
 		break;
 	case 'e':
@@ -148,155 +168,85 @@ void battle (player *vile, player *play, int randomNum,char act)
 	}
 	if (act == 'w')
 	    return;
-	if (play->type == 'w')
-	{
-		switch(act)
-		{
-		case 'a':
-		    dmg = play->dmg*2;
-		    play->nrg-=5;
-		    printf("Wand Blast, dealing %d damage.", dmg);
-		    break;
-		case 's':
-		    play->nrg-=10;
-		    dmg = play->dmg*3.5;
-		    printf("Fireball, dealing %d damage.", dmg);
-		    break;
-		case 'd':
-		    play->nrg-=20;
-		    ene = 10;
-		    dmg = play->dmg*4.25;
-		    printf("Gusty Forces, dealing %d damage and reducing op's energy by %d", dmg,ene);
-		    break;
-		case 'f':
-		    play->nrg-=30;
-		    ene = 25;
-		    dmg = play->dmg*6;
-		    printf("Shadow Bomb, dealing %d damage and reducing op's energy by %d", dmg,ene);
-		    break;
-		case 'c':
-		    play->nrg-=45;
-		    ene = 25;
-		    dmg = play->dmg*6;
-		    printf("Data Drainer, dealing %d damage and reducing op's energy by %d", dmg,ene);
-		    break;
-		case 'v':
-		    play->nrg-=60;
-		    ene = 25;
-		    dmg = play->dmg*6;
-		    printf("Cyber Electrocution, dealing %d damage and reducing op's energy by %d", dmg,ene);
-		    break;
-		}
-		
-	}
-	if (play->type == 'd')
-	{
-		switch(act)
-		{
-		case 'a':
-		    dmg = play->dmg*2;
-		    play->nrg-=5;
-		    printf("Wand Blast, dealing %d damage.", dmg);
-		    break;
-		case 's':
-		    play->nrg-=10;
-		    dmg = play->dmg*3.5;
-		    printf("Fireball, dealing %d damage.", dmg);
-		    break;
-		case 'd':
-		    play->nrg-=20;
-		    ene = 10;
-		    dmg = play->dmg*4.25;
-		    printf("Gusty Forces, dealing %d damage and reducing op's energy by %d", dmg,ene);
-		    break;
-		case 'f':
-		    play->nrg-=30;
-		    ene = 25;
-		    dmg = play->dmg*6;
-		    printf("Gusty Forces, dealing %d damage and reducing op's energy by %d", dmg,ene);
-		    break;
-		case 'c':
-		    play->nrg-=45;
-		    ene = 25;
-		    dmg = play->dmg*6;
-		    printf("Gusty Forces, dealing %d damage and reducing op's energy by %d", dmg,ene);
-		    break;
-		case 'v':
-		    play->nrg-=60;
-		    ene = 25;
-		    dmg = play->dmg*6;
-		    printf("Gusty Forces, dealing %d damage and reducing op's energy by %d", dmg,ene);
-		    break;
-		}
-		
-	}
-	if (play->type == 'b')
-	{
-		switch(act)
-		{
-		case 'a':
-		    dmg = play->dmg*2;
-		    play->nrg-=5;
-		    printf("Wand Blast, dealing %d damage.", dmg);
-		    break;
-		case 's':
-		    play->nrg-=10;
-		    dmg = play->dmg*3.5;
-		    printf("Fireball, dealing %d damage.", dmg);
-		    break;
-		case 'd':
-		    play->nrg-=20;
-		    ene = 10;
-		    dmg = play->dmg*4.25;
-		    printf("Gusty Forces, dealing %d damage and reducing op's energy by %d", dmg,ene);
-		    break;
-		case 'f':
-		    play->nrg-=30;
-		    ene = 25;
-		    dmg = play->dmg*6;
-		    printf("Gusty Forces, dealing %d damage and reducing op's energy by %d", dmg,ene);
-		    break;
-		case 'c':
-		    play->nrg-=45;
-		    ene = 25;
-		    dmg = play->dmg*6;
-		    printf("Gusty Forces, dealing %d damage and reducing op's energy by %d", dmg,ene);
-		    break;
-		case 'v':
-		    play->nrg-=60;
-		    ene = 25;
-		    dmg = play->dmg*6;
-		    printf("Gusty Forces, dealing %d damage and reducing op's energy by %d", dmg,ene);
-		    break;
-		}
-		
-	}
+	if (play->nrg >= 2)
+    {
+    	if (act == 'q')
+    	{
+    	    play->nrg-=2;
+             dmg = play->dmg;
+    		printf("Basic Attack, dealing %d damage.", dmg);
+    	}
+    	switch(act)
+    	{
+    	case 'a':
+    	    actNum=0;
+    	    break;
+    	case 's':
+    	    actNum=1;
+    	    break;
+    	case 'd':
+    	    actNum=2;
+    	    break;
+    	case 'f':
+    	    actNum=3;
+    	    break;
+    	case 'c':
+    	    actNum=4;
+    	    break;
+    	case 'v':
+    	    actNum=5;
+    	    break;
+    	}
+    	if (actNum>=0)
+    	{
+    	    dmg= play->dmg * play->dmgMultiplier[actNum];
+    	    play->nrg-= play->nrgActions[actNum];
+    	    printf("%s, dealing %d damage",play->nameActions[actNum],dmg);
+    	    if (actNum== (2,3,4,5))
+    	    {
+    	        ene= play->nrgDrain[actNum];
+    	        printf(" and reducing op's energy by %d",ene);
+    	    }
+    	}
+    }
 	vile->hp-=dmg;
 	vile->nrg-=ene;
 	if (vile->hp<=0)
 	    return;
 	printf("\n\nYour opponent uses ");
 	randomNum = rand()%3;
-    switch(randomNum)
-	{
-	case 0:
-	    vile->nrg-=2;
-	    dmg = vile->dmg;
-		printf("Basic Attack, dealing %d damage.", dmg);
-		break;
-	case 1:
-	    vile->nrg-=5;
-	    dmg = vile->dmg*1.5;
-		printf("Charged Attack, dealing %d damage.", dmg);
-		break;
-	case 2:
-	    vile->nrg-=10;
-	    dmg = vile->dmg*2;
-		printf("Data Chomp, dealing %d damage.", dmg);
-		break;
-	}
+	if (vile->nrg >= 2)
+        switch(randomNum)
+    	{
+    	case 0:
+    	    vile->nrg-=2;
+    	    dmg = vile->dmg;
+    		printf("Basic Attack, dealing %d damage.", dmg);
+    		break;
+    	case 1:
+    	    vile->nrg-=5;
+    	    dmg = vile->dmg*1.5;
+    		printf("Charged Attack, dealing %d damage.", dmg);
+    		break;
+    	case 2:
+    	    vile->nrg-=10;
+    	    dmg = vile->dmg*2;
+    		printf("Data Chomp, dealing %d damage.", dmg);
+    		break;
+    	}
+    else
+    {
+        randomNum = (rand()%15)+5;
+        vile->nrg+=randomNum;
+        printf("Energy recovery, gaining %d energy.", randomNum);
+    }
 	play->hp-=dmg;
 	if (play->hp<=0)
 	    return;
     printf("\n\nYour HP: %d\tYour Energy: %d\nEnemy HP: %d\tEnemy Energy: %d", play->hp,play->nrg,vile->hp,vile->nrg);
 }
+
+//void foundData
+
+functions.c.txt
+Displaying functions.c.txt.
