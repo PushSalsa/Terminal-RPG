@@ -1,16 +1,3 @@
-
-None selected 
-
-Skip to content
-Using Gmail with screen readers
-Meet
-Hangouts
-Conversations
-14.2 GB of 15 GB (94%) used
-Terms · Privacy · Program Policies
-Last account activity: 7 hours ago
-Details
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -245,8 +232,3 @@ void battle (player *vile, player *play, int randomNum,char act)
 	    return;
     printf("\n\nYour HP: %d\tYour Energy: %d\nEnemy HP: %d\tEnemy Energy: %d", play->hp,play->nrg,vile->hp,vile->nrg);
 }
-
-//void foundData
-
-functions.c.txt
-Displaying functions.c.txt.
