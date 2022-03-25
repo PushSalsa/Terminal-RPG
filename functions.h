@@ -10,8 +10,10 @@ typedef struct
 	int max;
 	int dmg;
 	int nrg;
+	int dmgMultiplier[6];
 	int nrgActions[6];
 	char nameActions[6][20];
+	int nrgDrain[6];
 } player;
 
 void playerStats(player *play);
